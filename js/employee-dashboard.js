@@ -77,7 +77,7 @@ document.addEventListener('DOMContentLoaded', function() {
             row.innerHTML = `
                 <td>${payslip.id}</td>
                 <td>${payslip.period}</td>
-                <td>${formatCurrency(payslip.netPay)}</td>
+                
                 <td class="action-cell">
                     <button class="btn btn-primary btn-small view-payslip-btn" data-payslip-id="${payslip.id}">View</button>
                 </td>
