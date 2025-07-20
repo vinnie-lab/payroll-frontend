@@ -1,0 +1,921 @@
+/* Import Google Font */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+
+/* --- CSS Variables Definition --- */
+:root {
+    /* Background Colors */
+    --bg-primary: #F8F9FA;
+    --bg-secondary: #FFFFFF;
+    --bg-sidebar: #111827;
+    --bg-card-1: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    --bg-card-2: linear-gradient(135deg, #f7971e 0%, #ffd200 100%);
+    --bg-card-3: linear-gradient(135deg, #2af598 0%, #009efd 100%);
+
+    /* ... other variables ... */
+    --btn-warning-bg: #F59E0B;
+    --btn-warning-hover: #D97706;
+
+    /* Button Colors */
+    --btn-primary-bg: #4F46E5;
+    --btn-primary-hover: #4338CA;
+    --btn-secondary-bg: #6B7280;
+    --btn-secondary-hover: #4B5563;
+    --btn-success-bg: #10B981;
+    --btn-success-hover: #059669;
+    --btn-danger-bg: #EF4444;
+    --btn-danger-hover: #DC2626;
+    
+    /* Text Colors */
+    --text-primary: #1F2937;
+    --text-secondary: #6B7280;
+    --text-sidebar: #D1D5DB;
+    --text-sidebar-active: #FFFFFF;
+    
+    /* Font Sizes */
+    --font-size-base: 1rem;
+    --font-size-lg: 1.125rem;
+    --font-size-xl: 1.25rem;
+    --font-size-xxl: 2rem;
+    
+    /* Button Sizes */
+    --btn-padding-sm: 0.4rem 0.8rem;
+    --btn-padding-md: 0.6rem 1.2rem;
+    --btn-padding-lg: 0.8rem 1.6rem;
+    
+    /* Transitions */
+    --transition-fast: 0.2s ease-in-out;
+}
+
+/* --- Base & Reset Styles --- */
+*, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html, body {
+    overflow-x: hidden; /* CRITICAL: Prevents horizontal scrolling globally */
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
+    font-size: var(--font-size-base);
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+    transition: color var(--transition-fast);
+}
+
+ul {
+    list-style: none;
+}
+
+/* --- Main Layout: CSS Grid --- */
+.dashboard-container {
+    display: grid;
+    grid-template-columns: 260px 1fr;
+    grid-template-rows: auto 1fr;
+    height: 100vh;
+    width: 100vw; /* Use viewport width */
+    max-width: 1440px;
+    margin: 0 auto;
+    transition: grid-template-columns var(--transition-fast);
+}
+
+.sidebar {
+    grid-row: 1 / 3;
+    background-color: var(--bg-sidebar);
+    color: var(--text-sidebar);
+    display: flex;
+    flex-direction: column;
+    padding: 1.5rem;
+    position: fixed;
+    height: 100%;
+    width: 260px;
+    transition: transform var(--transition-fast);
+    z-index: 1000;
+}
+
+.main-content {
+    grid-column: 2 / 3;
+    overflow-y: auto;
+    position: relative;
+}
+
+.main-header {
+    background-color: var(--bg-primary);
+    padding: 1rem 2rem;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid #E5E7EB;
+}
+
+main {
+    padding: 2rem;
+    transition: padding var(--transition-fast);
+}
+
+/* --- Sidebar Styles --- */
+.sidebar-header .logo {
+    font-size: var(--font-size-xl);
+    font-weight: 800;
+    color: var(--text-sidebar-active);
+    margin-bottom: 2rem;
+}
+.sidebar-nav {
+    flex-grow: 1;
+}
+.nav-link {
+    display: flex;
+    align-items: center;
+    padding: 0.75rem 1rem;
+    border-radius: 8px;
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+}
+.nav-link:hover {
+    background-color: #374151;
+    color: var(--text-sidebar-active);
+}
+.nav-link.active {
+    background-color: var(--btn-primary-bg);
+    color: var(--text-sidebar-active);
+}
+.nav-link i {
+    margin-right: 1rem;
+    width: 20px;
+    height: 20px;
+}
+
+/* --- Header Styles --- */
+.main-header h2 {
+    font-size: var(--font-size-lg);
+    font-weight: 600;
+}
+
+.header-actions {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+.icon-btn {
+    position: relative;
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: var(--text-secondary);
+}
+.icon-btn:hover { color: var(--text-primary); }
+
+.notification-dot {
+    position: absolute;
+    top: -2px;
+    right: -2px;
+    width: 8px;
+    height: 8px;
+    background-color: var(--btn-danger-bg);
+    border-radius: 50%;
+    border: 1px solid var(--bg-primary);
+}
+.user-profile {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+.user-profile img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+}
+.sidebar-toggle, .sidebar-toggle-mobile {
+    display: none;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0.5rem;
+}
+
+/* --- Main Content Sections --- */
+.metrics-grid, .visuals-grid, .bottom-grid {
+    display: grid;
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+}
+.metrics-grid { grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); }
+.visuals-grid { grid-template-columns: 2fr 1fr; }
+.bottom-grid { grid-template-columns: 1fr 1fr; }
+
+/* Components Styling */
+.metric-card {
+    color: white;
+    padding: 1.5rem;
+    border-radius: 12px;
+    position: relative;
+    overflow: hidden;
+}
+.metric-card.metric-card:nth-child(1) { background: var(--bg-card-1); }
+.metric-card:nth-child(2) { background: var(--bg-card-2); }
+.metric-card:nth-child(3) { background: var(--bg-card-3); }
+
+.metric-card h3 { font-size: var(--font-size-base); opacity: 0.8; margin-bottom: 0.5rem; }
+.metric-card p { font-size: var(--font-size-xxl); font-weight: 700; transition: font-size var(--transition-fast); }
+.metric-card .card-icon { position: absolute; right: 1rem; top: 1rem; opacity: 0.2; }
+.metric-card .card-icon i { width: 48px; height: 48px; }
+
+.chart-container, .panel {
+    background-color: var(--bg-secondary);
+    padding: 1.5rem;
+    border-radius: 12px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+}
+.chart-container h4, .panel h4 { margin-bottom: 1rem; }
+
+.activity-list li {
+    padding: 0.75rem 0;
+    border-bottom: 1px solid #E5E7EB;
+    font-size: 0.9rem;
+}
+.activity-list li:last-child { border-bottom: none; }
+.activity-list .time { color: var(--text-secondary); float: right; }
+
+.quick-actions {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+}
+.btn {
+    border: none;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color var(--transition-fast);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+}
+.btn-primary { background-color: var(--btn-primary-bg); color: white; }
+.btn-primary:hover { background-color: var(--btn-primary-hover); }
+
+.btn-secondary { background-color: #F3F4F6; color: var(--text-primary); border: 1px solid #D1D5DB;}
+.btn-secondary:hover { background-color: #E5E7EB; }
+
+.btn-success { background-color: var(--btn-success-bg); color: white; }
+.btn-success:hover { background-color: var(--btn-success-hover); }
+
+.btn-danger { background-color: var(--btn-danger-bg); color: white; }
+.btn-danger:hover { background-color: var(--btn-danger-hover); }
+
+
+.btn-small { font-size: 0.8rem; padding: var(--btn-padding-sm); }
+.btn-medium { font-size: 0.9rem; padding: var(--btn-padding-md); }
+.btn-large { font-size: 1rem; padding: var(--btn-padding-lg); }
+
+/* --- Responsive Design Adjustments --- */
+
+/* For tablets and smaller desktops */
+@media (max-width: 1024px) {
+    .visuals-grid, .bottom-grid {
+        grid-template-columns: 1fr; /* Stack the grids into a single column */
+    }
+}
+
+/* For tablets and mobile phones */
+@media (max-width: 768px) {
+    .dashboard-container {
+        grid-template-columns: 1fr; /* Sidebar is no longer in the grid flow */
+    }
+    .sidebar {
+        transform: translateX(-100%); /* Hide sidebar by default */
+        box-shadow: 0 0 15px rgba(0,0,0,0.2);
+    }
+    .sidebar.open {
+        transform: translateX(0); /* Show sidebar when toggled */
+    }
+    .sidebar-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+    .sidebar-toggle-mobile {
+        display: block;
+        color: white;
+    }
+    .main-header .sidebar-toggle {
+        display: block; /* Show hamburger icon */
+    }
+    .main-content {
+        grid-column: 1 / -1;
+    }
+    main {
+        padding: 1.5rem; /* Reduce padding on smaller screens */
+    }
+    .main-header {
+        padding: 1rem 1.5rem;
+    }
+}
+
+/* For small mobile phones */
+@media (max-width: 480px) {
+    main {
+        padding: 1rem; /* Further reduce padding */
+    }
+    .main-header {
+        padding: 1rem;
+    }
+    .quick-actions {
+        grid-template-columns: 1fr; /* Stack quick action buttons */
+    }
+    .metric-card p {
+        font-size: var(--font-size-xl); /* Make the big numbers smaller */
+    }
+    .user-profile span {
+        display: none; /* Hide user name on very small screens */
+    }
+    .activity-list .time {
+        float: none;
+        display: block;
+        margin-top: 0.25rem;
+        font-size: 0.8rem;
+    }
+}
+/*---Employee Management Styles---*/
+
+/* Panel & Table Styles */
+.panel {
+    background-color: var(--bg-secondary);
+    padding: 1.5rem;
+    border-radius: 12px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+}
+.panel-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+}
+.table-controls {
+    margin-bottom: 1rem;
+}
+.table-controls #searchInput {
+    padding: 0.75rem;
+    border: 1px solid #D1D5DB;
+    border-radius: 8px;
+    width: 300px;
+    font-size: 0.9rem;
+}
+.table-container {
+    overflow-x: auto;
+}
+/* --- Add/Replace these styles in your existing styles.css --- */
+
+/* ... (keep all your existing CSS from before) */
+
+
+/* --- REVISED & IMPROVED TABLE STYLING --- */
+/* This block now styles ALL tables inside a .panel for consistency */
+.panel table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: left;
+}
+
+
+.panel table th,
+.panel table td {
+    padding: 1rem;
+    /* This is the key style that adds the horizontal row border */
+    border-bottom: 1px solid #E5E7EB;
+    vertical-align: middle;
+}
+
+.panel table th {
+    font-weight: 600;
+    color: var(--text-secondary);
+    font-size: 0.875rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+/* Remove the default bottom border from the very last row in the table for a cleaner look */
+.panel table tbody tr:last-child td {
+    border-bottom: none;
+}
+
+
+/* -- Table styles for all tables inside a .panel -- */
+
+/* Specific styles for employee name with avatar can remain */
+#employeesTable .employee-name {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+#employeesTable .employee-name img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+}
+
+#employeesTable .status-active {
+    background-color: #DEF7EC;
+    color: #10B981;
+    padding: 0.25rem 0.5rem;
+    border-radius: 12px;
+    font-size: 0.8rem;
+    font-weight: 500;
+    text-align: center;
+}
+
+
+/* Actions Dropdown */
+.action-cell {
+    position: relative;
+    text-align: center;
+}
+.action-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0.5rem;
+}
+.action-dropdown {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    background: white;
+    border: 1px solid #E5E7EB;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    z-index: 10;
+    display: none; /* Toggled by JS */
+    width: 120px;
+}
+.action-dropdown.show {
+    display: block;
+}
+.action-dropdown-item {
+    padding: 0.75rem 1rem;
+    cursor: pointer;
+    font-size: 0.9rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+.action-dropdown-item:hover {
+    background-color: #F3F4F6;
+}
+.action-dropdown-item:first-child { border-radius: 8px 8px 0 0; }
+.action-dropdown-item:last-child { border-radius: 0 0 8px 8px; }
+
+/* Pagination */
+.pagination-controls {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 1rem;
+    margin-top: 1.5rem;
+}
+.pagination-controls button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+/* Modal Styles */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: none; /* Toggled by JS */
+    align-items: center;
+    justify-content: center;
+    z-index: 2000;
+    backdrop-filter: blur(4px);
+}
+.modal-overlay.show {
+    display: flex;
+}
+.modal-content {
+    background: white;
+    padding: 2rem;
+    border-radius: 12px;
+    width: 90%;
+    max-width: 500px;
+    position: relative;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+}
+.modal-close {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: var(--text-secondary);
+}
+.modal-close:hover {
+    color: var(--text-primary);
+}
+.modal-body {
+    margin-top: 1.5rem;
+}
+.modal-body .detail-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 0.75rem 0;
+    border-bottom: 1px solid #E5E7EB;
+}
+.modal-body .detail-row:last-child {
+    border: none;
+}
+.modal-body .detail-label {
+    font-weight: 600;
+    color: var(--text-secondary);
+}
+
+
+
+/* Department Styles */
+
+
+/* Modal Form Styles */
+.modal-form {
+    margin-top: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+.form-group {
+    display: flex;
+    flex-direction: column;
+}
+.form-group label {
+    font-weight: 500;
+    margin-bottom: 0.5rem;
+    color: var(--text-secondary);
+}
+.form-group input {
+    padding: 0.75rem;
+    border: 1px solid #D1D5DB;
+    border-radius: 8px;
+    font-size: 1rem;
+}
+.form-actions {
+    margin-top: 1rem;
+    display: flex;
+    justify-content: flex-end;
+    gap: 1rem;
+}
+
+
+/* Feedback Modals (Success/Error) */
+.feedback-modal .feedback-content {
+    text-align: center;
+    max-width: 400px;
+}
+.feedback-modal h4 {
+    font-size: var(--font-size-xl);
+    margin: 1rem 0 0.5rem;
+}
+.feedback-modal p {
+    color: var(--text-secondary);
+    margin-bottom: 1.5rem;
+}
+
+/* Animated Success Checkmark */
+.feedback-icon.success {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    background: #F0FDF4; /* Light Green */
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.success-checkmark .check-icon {
+    width: 40px;
+    height: 20px;
+    border: 3px solid #22C55E; /* Green */
+    border-top: none;
+    border-right: none;
+    transform: rotate(-45deg);
+    animation: checkmark 0.4s ease-in-out forwards;
+    opacity: 0;
+}
+@keyframes checkmark {
+    0% { height: 0; width: 0; opacity: 0; }
+    50% { height: 0; width: 10px; opacity: 0.5; }
+    100% { height: 20px; width: 40px; opacity: 1; }
+}
+
+
+/* Animated Error Cross */
+.feedback-icon.error {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    background: #FEF2F2; /* Light Red */
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.error-cross .cross-icon {
+    width: 40px;
+    height: 40px;
+    position: relative;
+    transform: rotate(45deg);
+}
+.error-cross .cross-icon::before,
+.error-cross .cross-icon::after {
+    content: '';
+    position: absolute;
+    background-color: #EF4444; /* Red */
+    border-radius: 2px;
+}
+.error-cross .cross-icon::before {
+    left: 50%;
+    top: 0;
+    width: 3px;
+    height: 100%;
+    transform: translateX(-50%);
+    animation: draw-line 0.3s ease-out forwards;
+}
+.error-cross .cross-icon::after {
+    top: 50%;
+    left: 0;
+    height: 3px;
+    width: 100%;
+    transform: translateY(-50%);
+    animation: draw-line 0.3s ease-out 0.2s forwards;
+}
+@keyframes draw-line {
+    from { transform-origin: center; transform: scale(0); }
+    to { transform: scale(1); }
+}
+
+
+/* PAYROLL STYLES */
+/* --- Add/Modify these styles in your styles.css --- */
+
+/* Text alignment for modals */
+.text-center {
+    text-align: center;
+}
+
+/* Modal Icon Styling */
+.modal-icon {
+    margin-bottom: 1rem;
+}
+.modal-icon.success {
+    color: var(--btn-success-bg);
+}
+.modal-icon i {
+    width: 60px;
+    height: 60px;
+}
+
+/* Payslip Lookup and Display Section */
+.payslip-lookup-controls {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+}
+.payslip-lookup-controls input {
+    flex-grow: 1;
+    padding: 0.75rem;
+    border: 1px solid #D1D5DB;
+    border-radius: 8px;
+    font-size: 0.9rem;
+}
+
+/* Styles for the payslip itself */
+.payslip-container-hidden {
+    display: none;
+}
+.payslip-container-visible {
+    display: block;
+    margin-top: 2rem;
+    padding: 2rem;
+    border: 1px solid #dee2e6;
+    border-radius: 8px;
+    background-color: #fff;
+}
+.payslip-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    border-bottom: 2px solid #333;
+    padding-bottom: 1rem;
+    margin-bottom: 1rem;
+}
+.payslip-header h3 { color: var(--text-primary); }
+.payslip-header .logo-text { font-weight: 800; font-size: 1.5rem; color: #333; }
+.payslip-info, .employee-info {
+    display: grid;
+    grid-template-columns: 150px 1fr;
+    gap: 0.5rem 1rem;
+    margin-bottom: 1.5rem;
+}
+.payslip-details table {
+    width: 100%;
+    margin-top: 1.5rem;
+    border-collapse: collapse;
+}
+/* MODIFICATION: Dotted borders */
+.payslip-details th, .payslip-details td {
+    padding: 0.75rem;
+    border: 1px dotted #a9aeb4; /* Changed to dotted and a soft gray */
+}
+.payslip-details th { 
+    background-color: #f8f9fa; 
+    font-weight: 600;
+}
+.payslip-summary {
+    margin-top: 1.5rem;
+    padding: 1rem;
+    background-color: #f8f9fa;
+    border-radius: 8px;
+    text-align: right;
+}
+.payslip-summary p { margin: 0.5rem 0; font-size: 1.1rem; }
+.payslip-summary .net-pay { font-weight: 700; font-size: 1.25rem; color: var(--btn-success-bg); }
+.payslip-actions {
+    text-align: right;
+    margin-top: 2rem;
+}
+
+/* Payroll Detail View Styles */
+.detail-view-header {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+}
+.detail-view-header h2 {
+    margin: 0;
+}
+
+
+/* 
+================================================================
+== NEW & IMPROVED PRINT STYLES FOR SINGLE-PAGE PAYSLIP ==
+================================================================
+*/
+@media print {
+    /* Hide every element on the page by default */
+    body * {
+        visibility: hidden;
+    }
+
+    /* Make the payslip container and all its children visible */
+    .payslip-container-visible, .payslip-container-visible * {
+        visibility: visible;
+    }
+
+    /* Position the payslip container to take up the whole screen */
+    .payslip-container-visible {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        margin: 0;
+        padding: 20px; /* Add some padding for the printable area */
+        border: none;
+        box-shadow: none;
+        font-size: 10pt; /* Reduce base font size for print */
+    }
+
+    /* Adjust font sizes within the payslip for better fit */
+    .payslip-container-visible .logo-text {
+        font-size: 14pt;
+    }
+    .payslip-container-visible h3 {
+        font-size: 12pt;
+    }
+    .payslip-container-visible, 
+    .payslip-container-visible table {
+        font-size: 9pt;
+    }
+    .payslip-summary .net-pay {
+        font-size: 11pt;
+    }
+
+    /* Reduce spacing to fit more content */
+    .payslip-header, .payslip-info, .employee-info, .payslip-details table, .payslip-summary {
+        margin-bottom: 0.75rem;
+    }
+    .payslip-details th, .payslip-details td {
+        padding: 0.4rem;
+    }
+
+    /* Hide the download button when printing */
+    .payslip-actions {
+        display: none;
+    }
+}
+
+
+
+/*---- SETTINGS PAGE STYLES ----*/
+
+
+.quick-actions-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+}
+/* The main responsive grid for the settings page */
+.settings-container-grid {
+    display: grid;
+    /* This line is key for responsiveness without horizontal scroll */
+    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+    gap: 1.5rem;
+}
+
+
+
+@media (max-width: 992px) {
+    .settings-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Table footer for "No data" message */
+.table-container tfoot td {
+    text-align: center;
+    padding: 2rem;
+    color: var(--text-secondary);
+}
+.table-container .action-cell {
+    text-align: right;
+}
+
+/* Modal Form styling */
+.modal-form .modal-body {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+}
+.modal-form .form-group {
+    display: flex;
+    flex-direction: column;
+}
+.modal-form .form-label {
+    font-weight: 500;
+    margin-bottom: 0.5rem;
+    color: var(--text-primary);
+}
+.modal-form .form-control {
+    padding: 0.75rem;
+    border: 1px solid #D1D5DB;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    width: 100%;
+}
+.modal-footer {
+    display: flex;
+    justify-content: flex-end;
+    gap: 1rem;
+    margin-top: 2rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid #E5E7EB;
+}
+
+/* Error Modal Icon Color */
+.modal-icon.error {
+    color: var(--btn-danger-bg);
+}
+
+
+/* Add the new button style */
+.btn-warning {
+    background-color: var(--btn-warning-bg);
+    color: white;
+}
+.btn-warning:hover {
+    background-color: var(--btn-warning-hover);
+}
+
+
+/* --- Other styles remain the same --- */
+.table-container tfoot td {
+    text-align: center;
+    padding: 2rem;
+    color: var(--text-secondary);
+}
+.table-container .action-cell { text-align: right; }

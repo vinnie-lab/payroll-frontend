@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payroll Management - Zephyra Payroll</title>
+    <link rel="stylesheet" href="../css/styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body>
+    <div class="dashboard-container">
+        <!-- Sidebar Navigation -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <h1 class="logo">Zephyra Payroll</h1>
+                <button id="sidebar-toggle-mobile" class="sidebar-toggle-mobile"><i data-lucide="x"></i></button>
+            </div>
+            <nav class="sidebar-nav">
+                <a href="index.html" class="nav-link"><i data-lucide="layout-grid"></i><span>Dashboard</span></a>
+                <a href="departments.html" class="nav-link"><i data-lucide="building-2"></i><span>Departments</span></a>
+                <a href="employees.html" class="nav-link"><i data-lucide="users"></i><span>Employees</span></a>
+                <a href="payrolls.html" class="nav-link active"><i data-lucide="credit-card"></i><span>Payrolls</span></a>
+                <a href="settings.html" class="nav-link"><i data-lucide="settings"></i><span>Settings</span></a>
+            </nav>
+            <div class="sidebar-footer">
+                <a href="#" class="nav-link"><i data-lucide="life-buoy"></i><span>Support</span></a>
+                <a href="#" class="nav-link"><i data-lucide="log-out"></i><span>Logout</span></a>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <header class="main-header">
+                <button id="sidebar-toggle" class="sidebar-toggle"><i data-lucide="menu"></i></button>
+                <div id="main-view-header">
+                    <h2>Payroll Management</h2>
+                </div>
+                <div class="header-actions">
+                    <button class="icon-btn"><i data-lucide="bell"></i><span class="notification-dot"></span></button>
+                    <div class="user-profile"><img src="https://i.pravatar.cc/40" alt="User Avatar"><span>Fernando B.</span></div>
+                </div>
+            </header>
+
+            <!-- This will contain the two main views: list and detail -->
+            <div id="page-content">
+
+                <!-- View 1: Payroll History List (Default View) -->
+                <main id="payroll-list-view">
+                    <section class="panel">
+                        <div class="panel-header">
+                           
+                            <button id="runPayrollBtn" class="btn btn-success btn-medium"><i data-lucide="play-circle"></i> Run Bulk Payroll</button>
+                        </div>
+                    </section>
+                    
+                    <section class="panel">
+                        <div class="panel-header">
+                            <h4>Payroll History</h4>
+                            <input type="text" id="payrollSearchInput" placeholder="Search by period (e.g., July 2025)... " style="padding: 0.8rem; outline: none; border: 1px solid #ccc; border-radius: 4px;box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+                        </div>
+                        <div class="table-container">
+                            <table id="payrollTable">
+                                <thead>
+                                    <tr>
+                                        <th>Period</th>
+                                        
+                                        <th>Amount (KES)</th>
+                                        <th>Employees</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody><!-- Data from JS --></tbody>
+                            </table>
+                        </div>
+                        <div class="pagination-controls">
+                            <button id="payrollPrevPageBtn" class="btn btn-secondary btn-small">Previous</button>
+                            <span id="payrollPageInfo">Page 1 of 2</span>
+                            <button id="payrollNextPageBtn" class="btn btn-secondary btn-small">Next</button>
+                        </div>
+                    </section>
+
+                    <section class="panel">
+                         <div class="panel-header">
+                             <h4>View Employee Payslip</h4>
+                         </div>
+                         <div class="payslip-lookup-controls">
+                            <input type="text" id="payslipIdInput" placeholder="Enter Payslip ID (e.g., PS-JUL2025-001)">
+                            <button id="viewPayslipBtn" class="btn btn-primary btn-medium">View Payslip</button>
+                         </div>
+                         <div id="payslip-display-area" class="payslip-container-hidden">
+                            <!-- Payslip will be rendered here by JS -->
+                         </div>
+                    </section>
+                </main>
+
+                <!-- View 2: Payroll Details (Initially Hidden) -->
+                <main id="payroll-detail-view" style="display: none;">
+                    <!-- Details will be populated by JS -->
+                </main>
+
+            </div>
+        </div>
+    </div>
+    
+    <!-- Run Payroll Success Modal -->
+    <div id="successModal" class="modal-overlay">
+        <div class="modal-content text-center">
+            <div class="modal-icon success"><i data-lucide="check-circle"></i></div>
+            <h3>Success!</h3>
+            <p>Bulk payroll for the current period has been successfully queued for processing.</p>
+            <button class="btn btn-primary btn-medium modal-close">OK</button>
+        </div>
+    </div>
+
+    <script src="../js/payroll.js"></script>
+</body>
+</html>

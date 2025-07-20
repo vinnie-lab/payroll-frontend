@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Department Management - Zephyra Payroll</title>
+    <link rel="stylesheet" href="../css/styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body>
+    <style>
+        tr{
+
+            cursor: pointer;
+            transition: background-color 0.3s ease; 
+            border-bottom: 3px solid #e0e0e0;
+        }
+    </style>
+    <div class="dashboard-container">
+        <!-- Sidebar Navigation (Active link is changed to Departments) -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <h1 class="logo">Zephyra Payroll</h1>
+                <button id="sidebar-toggle-mobile" class="sidebar-toggle-mobile">
+                    <i data-lucide="x"></i>
+                </button>
+            </div>
+            <nav class="sidebar-nav">
+                <a href="index.html" class="nav-link">
+                    <i data-lucide="layout-grid"></i>
+                    <span>Dashboard</span>
+                </a>
+                <a href="departments.html" class="nav-link active">
+                    <i data-lucide="building-2"></i>
+                    <span>Departments</span>
+                </a>
+                <a href="employees.html" class="nav-link">
+                    <i data-lucide="users"></i>
+                    <span>Employees</span>
+                </a>
+                <a href="payrolls.html" class="nav-link">
+                    <i data-lucide="credit-card"></i>
+                    <span>Payrolls</span>
+                </a>
+                <a href="settings.html" class="nav-link">
+                    <i data-lucide="settings"></i>
+                    <span>Settings</span>
+                </a>
+            </nav>
+            <div class="sidebar-footer">
+                <a href="#" class="nav-link">
+                    <i data-lucide="life-buoy"></i>
+                    <span>Support</span>
+                </a>
+                <a href="#" class="nav-link">
+                    <i data-lucide="log-out"></i>
+                    <span>Logout</span>
+                </a>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <header class="main-header">
+                <button id="sidebar-toggle" class="sidebar-toggle">
+                    <i data-lucide="menu"></i>
+                </button>
+                <h2>Department Management</h2>
+                <div class="header-actions">
+                    <button class="icon-btn">
+                        <i data-lucide="bell"></i>
+                        <span class="notification-dot"></span>
+                    </button>
+                    <div class="user-profile">
+                        <img src="https://i.pravatar.cc/40" alt="User Avatar">
+                        
+                    </div>
+                </div>
+            </header>
+
+            <main>
+                <!-- Metric Cards -->
+                <section class="metrics-grid">
+                    <div class="metric-card">
+                        <h3>Total Departments</h3>
+                        <p>15</p>
+                        <div class="card-icon"><i data-lucide="building"></i></div>
+                    </div>
+                    <div class="metric-card">
+                        <h3>Avg. Employees per Dept.</h3>
+                        <p>~83</p>
+                        <div class="card-icon"><i data-lucide="users"></i></div>
+                    </div>
+                </section>
+
+                <!-- Data Visualizations -->
+                 <section class="visuals-grid">
+                    <div class="chart-container">
+                        <h4>Department Size</h4>
+                        <div id="department-size-chart"></div>
+                    </div>
+                    <div class="chart-container">
+                        <h4>Budget Allocation by Department</h4>
+                        <div id="budget-allocation-chart"></div>
+                    </div>
+                </section>
+
+                <!-- Departments Table Section -->
+                <section class="panel">
+                    <div class="panel-header">
+                        <h4>Departments</h4>
+                        <button class="btn btn-primary btn-medium"><i data-lucide="plus"></i> Department</button>
+                    </div>
+                    <div class="table-controls">
+                        <input type="text" id="searchInput" placeholder="Search departments...">
+                    </div>
+                    <div class="table-container">
+                        <table id="departmentsTable">
+                            <thead>
+                                <tr>
+                                    <th>Department Name</th>
+                                    <th>Manager</th>
+                                    <th>No. of Employees</th>
+                                    
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <!-- Rows will be inserted by JavaScript -->
+                            </tbody>
+                        </table>
+                    </div>
+                     <div class="pagination-controls">
+                        <button id="prevPageBtn" class="btn btn-secondary btn-small">Previous</button>
+                        <span id="pageInfo">Page 1 of 10</span>
+                        <button id="nextPageBtn" class="btn btn-secondary btn-small">Next</button>
+                    </div>
+                </section>
+            </main>
+        </div>
+    </div>
+    
+    <!-- Edit Department Modal -->
+    <div id="editModal" class="modal-overlay">
+        <div class="modal-content">
+            <button class="modal-close"><i data-lucide="x"></i></button>
+            <h3>Edit Department</h3>
+            <form id="editDepartmentForm" class="modal-form">
+                <input type="hidden" id="editDeptId">
+                <div class="form-group">
+                    <label for="deptName">Department Name</label>
+                    <input type="text" id="deptName" required>
+                </div>
+                <div class="form-group">
+                    <label for="deptManager">Manager</label>
+                    <input type="text" id="deptManager" required>
+                </div>
+                <div class="form-group">
+                    <label for="deptEmail">Department Email</label>
+                    <input type="email" id="deptEmail" required>
+                </div>
+                <div class="form-actions">
+                    <button type="button" class="btn btn-secondary btn-medium cancel-btn">Cancel</button>
+                    <button type="submit" class="btn btn-primary btn-medium">Save Changes</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Animated Success Modal -->
+    <div id="successModal" class="modal-overlay feedback-modal">
+        <div class="modal-content feedback-content">
+            <div class="feedback-icon success">
+                <div class="success-checkmark">
+                    <div class="check-icon"></div>
+                </div>
+            </div>
+            <h4>Success!</h4>
+            <p>Department updated successfully.</p>
+            <div class="modal-btn" style="display: flex; justify-content: center;">
+                <button class="btn btn-success btn-medium ok-btn">OK</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Animated Error Modal -->
+    <div id="errorModal" class="modal-overlay feedback-modal">
+        <div class="modal-content feedback-content">
+            <div class="feedback-icon error">
+                 <div class="error-cross">
+                    <div class="cross-icon"></div>
+                </div>
+            </div>
+            <h4>Error!</h4>
+            <p id="errorMessage"></p>
+            <button class="btn btn-danger btn-medium ok-btn">Try Again</button>
+        </div>
+    </div>
+
+    <script src="../js/departments.js"></script>
+</body>
+</html>

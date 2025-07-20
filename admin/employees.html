@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Employee Management - Zephyra Payroll</title>
+    <link rel="stylesheet" href="../css/styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body>
+    <div class="dashboard-container">
+        <!-- Sidebar Navigation (Active link is changed to Employees) -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <h1 class="logo">Zephyra Payroll</h1>
+                 <button id="sidebar-toggle-mobile" class="sidebar-toggle-mobile">
+                    <i data-lucide="x"></i>
+                </button>
+            </div>
+            <nav class="sidebar-nav">
+                <a href="index.html" class="nav-link">
+                    <i data-lucide="layout-grid"></i>
+                    <span>Dashboard</span>
+                </a>
+                <a href="departments.html" class="nav-link">
+                    <i data-lucide="building-2"></i>
+                    <span>Departments</span>
+                </a>
+                <a href="employees.html" class="nav-link active">
+                    <i data-lucide="users"></i>
+                    <span>Employees</span>
+                </a>
+                <a href="payrolls.html" class="nav-link">
+                    <i data-lucide="credit-card"></i>
+                    <span>Payrolls</span>
+                </a>
+                <a href="#" class="nav-link">
+                    <i data-lucide="settings"></i>
+                    <span>Settings</span>
+                </a>
+            </nav>
+            <div class="sidebar-footer">
+                 <a href="#" class="nav-link">
+                    <i data-lucide="life-buoy"></i>
+                    <span>Support</span>
+                </a>
+                <a href="#" class="nav-link">
+                    <i data-lucide="log-out"></i>
+                    <span>Logout</span>
+                </a>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <!-- Sticky Header -->
+            <header class="main-header">
+                <button id="sidebar-toggle" class="sidebar-toggle">
+                    <i data-lucide="menu"></i>
+                </button>
+                <h2>Employee Management</h2>
+                <div class="header-actions">
+                    <button class="icon-btn">
+                        <i data-lucide="bell"></i>
+                        <span class="notification-dot"></span>
+                    </button>
+                    <div class="user-profile">
+                        <img src="https://i.pravatar.cc/40" alt="User Avatar">
+                       
+                    </div>
+                </div>
+            </header>
+
+            <main>
+                <!-- Metric Cards -->
+                <section class="metrics-grid">
+                    <div class="metric-card">
+                        <h3>Total Male Employees</h3>
+                        <p>689</p>
+                        <div class="card-icon"><i data-lucide="circle-user"></i></div>
+                    </div>
+                    <div class="metric-card">
+                        <h3>Total Female Employees</h3>
+                        <p>565</p>
+                        <div class="card-icon"><i data-lucide="circle-user"></i></div>
+                    </div>
+                </section>
+
+                <!-- Employees Table Section -->
+                <section class="panel">
+                    <div class="panel-header">
+                        <h4>Employees</h4>
+                        <button class="btn btn-primary btn-medium"><i data-lucide="plus"></i> Employee</button>
+                    </div>
+                    <div class="table-controls">
+                        <input type="text" id="searchInput" placeholder="Search employees...">
+                    </div>
+                    <div class="table-container">
+                        <table id="employeesTable">
+                            <thead>
+                                <tr>
+                                    <th>Employee ID</th>
+                                    <th>Name</th>
+                                    <th>Email</th>
+                                    <th>Department</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <!-- Rows will be inserted by JavaScript -->
+                            </tbody>
+                        </table>
+                    </div>
+                     <div class="pagination-controls">
+                        <button id="prevPageBtn" class="btn btn-secondary btn-small">Previous</button>
+                        <span id="pageInfo">Page 1 of 10</span>
+                        <button id="nextPageBtn" class="btn btn-secondary btn-small">Next</button>
+                    </div>
+                </section>
+            </main>
+        </div>
+    </div>
+    
+    <!-- View Employee Modal -->
+    <div id="viewModal" class="modal-overlay">
+        <div class="modal-content">
+            <button class="modal-close"><i data-lucide="x"></i></button>
+            <h3 id="modalTitle">Employee Details</h3>
+            <div id="modalBody" class="modal-body">
+                <!-- Employee details will be populated here -->
+            </div>
+        </div>
+    </div>
+
+    <script src="../js/employees.js"></script>
+</body>
+</html>

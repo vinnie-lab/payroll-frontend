@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Settings - Zephyra Payroll</title>
+    <link rel="stylesheet" href="../css/styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Defer ensures JS runs after the entire HTML page is parsed -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="../js/settings.js" defer></script>
+</head>
+<body>
+    <div class="dashboard-container">
+        <!-- Sidebar Navigation -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <h1 class="logo">Zephyra Payroll</h1>
+                <button id="sidebar-toggle-mobile" class="sidebar-toggle-mobile"><i data-lucide="x"></i></button>
+            </div>
+            <nav class="sidebar-nav">
+                <a href="index.html" class="nav-link"><i data-lucide="layout-grid"></i><span>Dashboard</span></a>
+                <a href="departments.html" class="nav-link"><i data-lucide="building-2"></i><span>Departments</span></a>
+                <a href="employees.html" class="nav-link"><i data-lucide="users"></i><span>Employees</span></a>
+                <a href="payroll.html" class="nav-link"><i data-lucide="credit-card"></i><span>Payrolls</span></a>
+                <a href="settings.html" class="nav-link active"><i data-lucide="settings"></i><span>Settings</span></a>
+            </nav>
+            <div class="sidebar-footer">
+                <a href="#" class="nav-link"><i data-lucide="life-buoy"></i><span>Support</span></a>
+                <a href="#" class="nav-link"><i data-lucide="log-out"></i><span>Logout</span></a>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <header class="main-header">
+                <button id="sidebar-toggle" class="sidebar-toggle"><i data-lucide="menu"></i></button>
+                <h2>System Settings</h2>
+                <div class="header-actions">
+                    <button class="icon-btn"><i data-lucide="bell"></i><span class="notification-dot"></span></button>
+                    <div class="user-profile"><img src="https://i.pravatar.cc/40" alt="User Avatar"><span>Fernando B.</span></div>
+                </div>
+            </header>
+
+            <main>
+                <div class="settings-container-grid">
+                    <!-- Quick Actions Section -->
+                    <section class="panel">
+                        <div class="panel-header"><h4>Quick Actions</h4></div>
+                        <div class="quick-actions-grid">
+                            <button class="btn btn-primary btn-medium add-btn" data-type="scale"><i data-lucide="plus-circle"></i> Payment Scale</button>
+                            <button class="btn btn-success btn-medium add-btn" data-type="bonus"><i data-lucide="plus-circle"></i> Bonus</button>
+                            <button class="btn btn-danger btn-medium add-btn" data-type="deduction"><i data-lucide="plus-circle"></i> Deduction</button>
+                            <button class="btn btn-warning btn-medium add-btn" data-type="allowance"><i data-lucide="plus-circle"></i> Allowance</button>
+                        </div>
+                    </section>
+                    <!-- Payment Scales -->
+                    <section class="panel">
+                        <div class="panel-header"><h4>Payment Scales</h4></div>
+                        <div class="table-container">
+                            <table id="scalesTable">
+                                <thead><tr><th>Scale</th><th>Salary (KES)</th><th>Actions</th></tr></thead>
+                                <tbody></tbody>
+                                <tfoot></tfoot>
+                            </table>
+                        </div>
+                    </section>
+                    <!-- Bonuses -->
+                    <section class="panel">
+                        <div class="panel-header"><h4>Bonuses</h4></div>
+                        <div class="table-container">
+                            <table id="bonusesTable">
+                                <thead><tr><th>Name</th><th>Amount (KES)</th><th>Actions</th></tr></thead>
+                                <tbody></tbody>
+                                <tfoot></tfoot>
+                            </table>
+                        </div>
+                    </section>
+                     <!-- Allowances -->
+                    <section class="panel">
+                        <div class="panel-header"><h4>Allowances</h4></div>
+                        <div class="table-container">
+                             <table id="allowancesTable">
+                                <thead><tr><th>Name</th><th>% of Basic</th><th>Actions</th></tr></thead>
+                                <tbody></tbody>
+                                <tfoot></tfoot>
+                            </table>
+                        </div>
+                    </section>
+                    <!-- Deductions -->
+                    <section class="panel">
+                        <div class="panel-header"><h4>Deductions</h4></div>
+                        <div class="table-container">
+                            <table id="deductionsTable">
+                                <thead><tr><th>Name</th><th>Type</th><th>Emp %</th><th>Co %</th><th>Actions</th></tr></thead>
+                                <tbody></tbody>
+                                <tfoot></tfoot>
+                            </table>
+                        </div>
+                    </section>
+                    
+                </div>
+            </main>
+        </div>
+    </div>
+
+
+    
+    
+    <!-- =============================================================== -->
+    <!-- THE MISSING MODALS ARE NOW INCLUDED HERE -->
+    <!-- =============================================================== -->
+
+    <!-- Universal Add/Edit Modal -->
+    <div id="formModal" class="modal-overlay">
+        <div class="modal-content">
+            <button class="modal-close"><i data-lucide="x"></i></button>
+            <h3 id="modalTitle">Modal Title</h3>
+            <form id="modalForm" class="modal-form" novalidate>
+                <div id="modalBody" class="modal-body">
+                    <!-- Form fields will be inserted here by JavaScript -->
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary btn-medium modal-cancel">Cancel</button>
+                    <button type="submit" class="btn btn-primary btn-medium">Save Changes</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Success Modal -->
+    <div id="successModal" class="modal-overlay">
+        <div class="modal-content text-center">
+            <div class="modal-icon success"><i data-lucide="check-circle"></i></div>
+            <h3>Success!</h3>
+            <p>Your changes have been saved.</p>
+            <button class="btn btn-primary btn-medium modal-close">OK</button>
+        </div>
+    </div>
+
+    <!-- Error Modal -->
+    <div id="errorModal" class="modal-overlay">
+        <div class="modal-content text-center">
+            <div class="modal-icon error"><i data-lucide="x-circle"></i></div>
+            <h3>Error!</h3>
+            <p>Could not save changes. Please fill all fields correctly.</p>
+            <button class="btn btn-danger btn-medium modal-close">Try Again</button>
+        </div>
+    </div>
+
+</body>
+</html>

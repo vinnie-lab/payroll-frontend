@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>View Payslip - Zephyra Payroll</title>
+    <link rel="stylesheet" href="../css/styles.css">
+    <!-- Specific styles for this page -->
+    <style>
+        body {
+            background-color: var(--bg-primary);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 2rem;
+        }
+        .payslip-actions {
+            margin-bottom: 2rem;
+            display: flex;
+            gap: 1rem;
+        }
+        .payslip-container {
+            width: 210mm; /* A4 width */
+            min-height: 297mm; /* A4 height */
+            background: white;
+            padding: 25mm;
+            box-shadow: 0 5px 25px rgba(0,0,0,0.1);
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+            color: #333;
+        }
+        .payslip-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            border-bottom: 2px solid #E5E7EB;
+            padding-bottom: 1rem;
+        }
+        .payslip-header .logo { font-size: 1.8rem; font-weight: 800; color: #111827; }
+        .payslip-header .payslip-title { text-align: right; }
+        .payslip-title h2 { font-size: 2rem; margin: 0; }
+        .payslip-title p { margin: 0; color: #6B7280; }
+
+        .employee-details {
+            margin-top: 2rem;
+            padding: 1rem;
+            background-color: #F8F9FA;
+            border-radius: 8px;
+        }
+        .employee-details table { width: 100%; border-collapse: collapse; }
+        .employee-details td { padding: 0.5rem; }
+        .employee-details td:first-child { font-weight: bold; width: 150px; }
+
+        .payslip-body {
+            margin-top: 2rem;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+        }
+        .payslip-section h3 {
+            font-size: 1.2rem;
+            border-bottom: 1px solid #E5E7EB;
+            padding-bottom: 0.5rem;
+            margin-bottom: 1rem;
+            color: var(--btn-primary-bg);
+        }
+        .payslip-section table { width: 100%; border-collapse: collapse; }
+        .payslip-section th, .payslip-section td { padding: 0.75rem 0; border-bottom: 1px dotted #D1D5DB; }
+        .payslip-section th { text-align: left; color: #6B7280; }
+        .payslip-section td { text-align: right; font-weight: 500; }
+        .payslip-section .total-row td { font-weight: bold; border-top: 2px solid #333; border-bottom: none; }
+
+        .payslip-summary {
+            margin-top: 2rem;
+            background-color: var(--bg-sidebar);
+            color: white;
+            padding: 1.5rem;
+            border-radius: 8px;
+            text-align: center;
+        }
+        .payslip-summary h3 { font-size: 1rem; text-transform: uppercase; letter-spacing: 1px; opacity: 0.7; margin: 0; }
+        .payslip-summary p { font-size: 2.5rem; font-weight: bold; margin: 0.5rem 0 0; }
+        
+        @media print {
+            body { padding: 0; background: white; }
+            .payslip-actions { display: none; }
+            .payslip-container { box-shadow: none; border: none; }
+        }
+    </style>
+    <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body>
+    <div class="payslip-actions">
+        <a href="payrolls.html" class="btn btn-secondary btn-medium"><i data-lucide="arrow-left"></i> Back to Payroll</a>
+        <button onclick="window.print()" class="btn btn-primary btn-medium"><i data-lucide="printer"></i> Print / Save as PDF</button>
+    </div>
+
+    <div class="payslip-container">
+        <header class="payslip-header">
+            <div class="logo">Zephyra Payroll</div>
+            <div class="payslip-title">
+                <h2>Payslip</h2>
+                <p>For the period: July 2025</p>
+            </div>
+        </header>
+
+        <section class="employee-details">
+            <table>
+                <tr><td>Employee Name:</td><td>Brian Lowe</td></tr>
+                <tr><td>Employee ID:</td><td>ZEP002</td></tr>
+                <tr><td>Department:</td><td>Marketing</td></tr>
+                <tr><td>Payslip ID:</td><td>PS-002-JUL25</td></tr>
+            </table>
+        </section>
+
+        <div class="payslip-body">
+            <section class="payslip-section earnings">
+                <h3>Earnings</h3>
+                <table>
+                    <tr><th>Basic Salary</th><td>$5,000.00</td></tr>
+                    <tr><th>Housing Allowance</th><td>$800.00</td></tr>
+                    <tr><th>Transport Allowance</th><td>$300.00</td></tr>
+                    <tr class="total-row"><td>Gross Earnings</td><td>$6,100.00</td></tr>
+                </table>
+            </section>
+
+             <section class="payslip-section deductions">
+                <h3>Deductions</h3>
+                <table>
+                    <tr><th>Income Tax</th><td>$750.00</td></tr>
+                    <tr><th>Pension Contribution</th><td>$300.00</td></tr>
+                    <tr><th>Health Insurance</th><td>$150.00</td></tr>
+                    <tr class="total-row"><td>Total Deductions</td><td>$1,200.00</td></tr>
+                </table>
+            </section>
+        </div>
+
+        <section class="payslip-summary">
+            <h3>Net Pay</h3>
+            <p>$4,900.00</p>
+        </section>
+    </div>
+    <script>lucide.createIcons();</script>
+</body>
+</html>

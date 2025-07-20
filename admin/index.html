@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - Zephyra Payroll</title>
+    <link rel="stylesheet" href="../css/styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body>
+    <div class="dashboard-container">
+        <!-- Sidebar Navigation -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <h1 class="logo">Zephyra Payroll</h1>
+                <button id="sidebar-toggle-mobile" class="sidebar-toggle-mobile">
+                    <i data-lucide="x"></i>
+                </button>
+            </div>
+            <nav class="sidebar-nav">
+                <a href="index.html" class="nav-link active">
+                    <i data-lucide="layout-grid"></i>
+                    <span>Dashboard</span>
+                </a>
+                <a href="departments.html" class="nav-link">
+                    <i data-lucide="building-2"></i>
+                    <span>Departments</span>
+                </a>
+                <a href="employees.html" class="nav-link">
+                    <i data-lucide="users"></i>
+                    <span>Employees</span>
+                </a>
+                <a href="payrolls.html" class="nav-link">
+                    <i data-lucide="credit-card"></i>
+                    <span>Payrolls</span>
+                </a>
+                <a href="settings.html" class="nav-link">
+                    <i data-lucide="settings"></i>
+                    <span>Settings</span>
+                </a>
+            </nav>
+            <div class="sidebar-footer">
+                 <a href="#" class="nav-link">
+                    <i data-lucide="life-buoy"></i>
+                    <span>Support</span>
+                </a>
+                <a href="#" class="nav-link">
+                    <i data-lucide="log-out"></i>
+                    <span>Logout</span>
+                </a>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <!-- Sticky Header -->
+            <header class="main-header">
+                 <button id="sidebar-toggle" class="sidebar-toggle">
+                    <i data-lucide="menu"></i>
+                </button>
+                <h2>Welcome Back, Admin!</h2>
+                <div class="header-actions">
+                    <button class="icon-btn">
+                        <i data-lucide="bell"></i>
+                        <span class="notification-dot"></span>
+                    </button>
+                    <div class="user-profile">
+                        <img src="https://i.pravatar.cc/40" alt="User Avatar">
+                    </div>
+                </div>
+            </header>
+
+            <main>
+                <!-- Metrics Cards -->
+                <section class="metrics-grid">
+                    <div class="metric-card">
+                        <div class="card-icon"><i data-lucide="users"></i></div>
+                        <h3>Total Employees</h3>
+                        <p>1,254</p>
+                    </div>
+                    <div class="metric-card">
+                        <div class="card-icon"><i data-lucide="dollar-sign"></i></div>
+                        <h3>Total Processed Payments</h3>
+                        <p>KES 2.4M</p>
+                    </div>
+                    <div class="metric-card">
+                        <div class="card-icon"><i data-lucide="building"></i></div>
+                        <h3>Departments</h3>
+                        <p>15</p>
+                    </div>
+                </section>
+
+                <!-- Data Visualizations -->
+                <section class="visuals-grid">
+                    <div class="chart-container">
+                        <h4>Monthly Payment Trends</h4>
+                        <div id="monthly-payments-chart"></div>
+                    </div>
+                    <div class="chart-container">
+                        <h4>Salary by Department</h4>
+                        <div id="salary-by-department-chart"></div>
+                    </div>
+                </section>
+
+                <!-- Activities and Actions -->
+                <section class="bottom-grid">
+                    <div class="panel">
+                        <h4>Recent Activities</h4>
+                        <ul class="activity-list">
+                           <li><strong>Vincent Amonde</strong> was added to the IT department. <span class="time">2m ago</span></li>
+                           <li>Payroll for <strong>July 2025</strong> has been successfully processed. <span class="time">1h ago</span></li>
+                           <li><strong>Jane Smith's</strong> salary was updated. <span class="time">3h ago</span></li>
+                           <li>New department <strong>"Data Science"</strong> was created. <span class="time">1d ago</span></li>
+                        </ul>
+                    </div>
+                    <div class="panel">
+                        <h4>Quick Actions</h4>
+                        <div class="quick-actions">
+                           <button class="btn btn-primary btn-medium"><i data-lucide="plus-circle"></i> Employee</button>
+                           <button class="btn btn-secondary btn-medium"><i data-lucide="plus-circle"></i> Department</button>
+                           <button class="btn btn-success btn-medium"><i data-lucide="play-circle"></i> Payroll</button>
+                           <button class="btn btn-danger btn-medium"><i data-lucide="download"></i> Report</button>
+                        </div>
+                    </div>
+                </section>
+            </main>
+        </div>
+    </div>
+    <script src="../js/main.js"></script>
+</body>
+</html>
