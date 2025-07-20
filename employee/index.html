@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Employee Dashboard - Zephyra Payroll</title>
+    <link rel="stylesheet" href="../css/styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body>
+    <style>
+        @media print {
+  body * {
+    visibility: hidden !important;
+  }
+  #payslip-display-area, #payslip-display-area * {
+    visibility: visible !important;
+    overflow: visible !important;
+  }
+  #payslip-display-area {
+    position: absolute !important;
+    top: 10rem !important;
+    
+    min-width: 0 !important;
+    margin: 0 !important;
+    padding: 0.5cm !important;
+    background: #fff !important;
+    box-sizing: border-box !important;
+    page-break-inside: avoid !important;
+  }
+  .sidebar,
+  .main-header,
+  .detail-view-header,
+  .payslip-actions,
+  #close-payslip-btn {
+    display: none !important;
+  }
+  .payslip-details table {
+    width: 100% !important;
+    table-layout: fixed !important;
+    word-break: break-word !important;
+    font-size: 10pt !important;
+  }
+  .payslip-details th, .payslip-details td {
+    padding: 0.4em !important;
+    font-size: 10pt !important;
+  }
+}
+    </style>
+    <div class="dashboard-container">
+        <!-- Employee Sidebar -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <h1 class="logo">Zephyra Payroll</h1>
+                <button id="sidebar-toggle-mobile" class="sidebar-toggle-mobile"><i data-lucide="x"></i></button>
+            </div>
+            <nav class="sidebar-nav">
+                <a href="index.html" class="nav-link active"><i data-lucide="layout-grid"></i><span>Dashboard</span></a>
+                <a href="mypayslip.html" class="nav-link"><i data-lucide="receipt"></i><span>My Payslips</span></a>
+                <a href="#" class="nav-link"><i data-lucide="user"></i><span>My Profile</span></a>
+            </nav>
+            <div class="sidebar-footer">
+                <a href="#" class="nav-link"><i data-lucide="life-buoy"></i><span>Support</span></a>
+                <a href="#" class="nav-link"><i data-lucide="log-out"></i><span>Logout</span></a>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <header class="main-header">
+                <button id="sidebar-toggle" class="sidebar-toggle"><i data-lucide="menu"></i></button>
+                <h2>Employee Dashboard</h2>
+                <div class="header-actions">
+                    <div class="user-profile"><img src="https://i.pravatar.cc/150?img=1" alt="User Avatar"><span>Alicia H.</span></div>
+                </div>
+            </header>
+
+            <main>
+                <!-- Welcome & Profile Section -->
+                <section class="panel profile-panel">
+                    <div class="profile-summary-container">
+                        <img src="https://i.pravatar.cc/150?img=1" alt="Profile Picture" class="profile-picture">
+                        <div class="profile-details">
+                            <h3>Welcome Back, Alicia!</h3>
+                            <p class="profile-meta">
+                                <span>ID: <strong>ZEP001</strong></span> | 
+                                <span>Department: <strong>Engineering</strong></span> | 
+                                <span>Role: <strong>Senior Developer</strong></span>
+                            </p>
+                            <div class="profile-actions">
+                                <button class="btn btn-secondary btn-small"><i data-lucide="edit"></i> Edit Profile</button>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <div class="employee-main-grid">
+                    <!-- Latest Payslips Section -->
+                    <section class="panel">
+                        <div class="panel-header">
+                            <h4>Latest Payslips</h4>
+                            <input type="text" id="payslipSearchInput" class="form-control" placeholder="Search by ID, Month, or Year...">
+                        </div>
+                        <div class="table-container">
+                            <table id="payslipsTable">
+                                <thead>
+                                    <tr>
+                                        <th>Payslip ID</th>
+                                        <th>Pay Period</th>
+                                        <th>Net Pay (KES)</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody> <!-- Populated by JS --> </tbody>
+                            </table>
+                        </div>
+                    </section>
+
+                    <!-- Quick Actions Section -->
+                    <section class="panel">
+                        <div class="panel-header"><h4>Quick Actions</h4></div>
+                        <div class="quick-actions-grid employee-actions">
+                            <button class="btn btn-secondary btn-medium"><i data-lucide="calendar-plus"></i> Request Leave</button>
+                            <button class="btn btn-secondary btn-medium"><i data-lucide="file-text"></i> View Company Policies</button>
+                            <button class="btn btn-secondary btn-medium"><i data-lucide="info"></i> Update Personal Info</button>
+                            <button class="btn btn-secondary btn-medium"><i data-lucide="message-square"></i> Contact HR</button>
+                        </div>
+                    </section>
+                </div>
+
+                <!-- ====================================================== -->
+                <!-- == NEW: HIDDEN PAYSLIP DISPLAY AREA                 == -->
+                <!-- ====================================================== -->
+                <section id="payslip-view-container" class="payslip-container-hidden">
+                    <div id="payslip-display-area" class="panel" style="position: relative;">
+                        <button id="close-payslip-btn" class="modal-close" style="z-index: 5;"><i data-lucide="x"></i></button>
+
+                        <div class="payslip-header">
+                            <div>
+                                <h3 class="logo-text">Zephyra Payroll</h3>
+                                <p>123 Business Avenue, Nairobi, Kenya</p>
+                            </div>
+                            <div>
+                                <h3>Official Payslip</h3>
+                                <p>Pay Period: <span id="ps-pay-period"></span></p>
+                            </div>
+                        </div>
+
+                        <div class="employee-info" style="margin-top: 2rem;">
+                            <strong>Employee Name:</strong> <span id="ps-employee-name">Alicia H.</span>
+                            <strong>Employee ID:</strong> <span id="ps-employee-id">ZEP001</span>
+                            <strong>Department:</strong> <span id="ps-department">Engineering</span>
+                            <strong>Pay Date:</strong> <span id="ps-pay-date"></span>
+                        </div>
+
+                        <div class="payslip-details">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Earnings</th>
+                                        <th style="text-align: right;">Amount (KES)</th>
+                                        <th>Deductions</th>
+                                        <th style="text-align: right;">Amount (KES)</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="ps-details-body">
+                                    <!-- JS will populate this -->
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <div class="payslip-summary">
+                            <p><strong>Gross Earnings:</strong> <span id="ps-gross-earnings">0.00</span></p>
+                            <p><strong>Total Deductions:</strong> <span id="ps-total-deductions">0.00</span></p>
+                            <hr style="border: 0; border-top: 1px dotted #ccc; margin: 1rem 0;">
+                            <p class="net-pay">NET PAY: <span id="ps-net-pay">0.00</span></p>
+                        </div>
+
+                        <div class="payslip-actions">
+                            <button id="print-payslip-btn" class="btn btn-success">
+                                <i data-lucide="printer"></i> Download / Print
+                            </button>
+                        </div>
+                    </div>
+                </section>
+                <!-- ====================================================== -->
+                <!-- == END OF HIDDEN PAYSLIP AREA                     == -->
+                <!-- ====================================================== -->
+
+
+            </main>
+        </div>
+    </div>
+
+    <script src="../js/employee-dashboard.js"></script>
+</body>
+</html>
